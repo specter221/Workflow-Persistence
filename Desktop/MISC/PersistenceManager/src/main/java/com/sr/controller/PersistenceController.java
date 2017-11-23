@@ -14,7 +14,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sr.domain.PersistenceModel;
-import com.sr.exceptions.UserAlreadyExists;
+import com.sr.exceptions.WorkflowAlreadyExists;
+import com.sr.exceptions.WorkflowNotFoundException;
 import com.sr.service.PersistenceService;
 
 @RestController
@@ -27,7 +28,7 @@ public class PersistenceController {
 		
 		/*----------------Get workflow ---------------------- */
 		@RequestMapping(value="/get" , method=RequestMethod.GET)
-		public ResponseEntity getWorkflow() {
+		public ResponseEntity getWorkflow() throws WorkflowNotFoundException {
 			List <PersistenceModel> workflow = persistenceservice.getWorkflow();	
 			
 			 if(workflow.isEmpty())
@@ -40,7 +41,7 @@ public class PersistenceController {
 
 	   /* ---------------- get workflow by id -------------------------- */
 		@RequestMapping(value = "/get/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-		    public ResponseEntity<PersistenceModel> getWorkFlow(@PathVariable("id") long id) {
+		    public ResponseEntity<PersistenceModel> getWorkFlow(@PathVariable("id") long id) throws WorkflowNotFoundException {
 		        PersistenceModel workflow = persistenceservice.getWorkflow(id);
 		        if (workflow == null) {
 		            System.out.println("workflow with id " + id + " not found");
@@ -68,16 +69,16 @@ public class PersistenceController {
 		
 		/*-----------------------update workflow -----------------------*/
 		@RequestMapping(value="/update", method=RequestMethod.PUT, consumes="application/json")
-	    public ResponseEntity updateWorkflow(@RequestBody PersistenceModel persistencemodel) throws UserAlreadyExists
+	    public ResponseEntity updateWorkflow(@RequestBody PersistenceModel persistencemodel) throws WorkflowAlreadyExists
 	    {
 	        /*Add validation code*/ 
 	         PersistenceModel persistencemodel1= persistenceservice.updateWorkflow(persistencemodel);
 	         if(persistencemodel1==persistencemodel) 
 	         {
-	             return new ResponseEntity<String>("user updated", HttpStatus.OK); 
+	             return new ResponseEntity<String>("workflow updated", HttpStatus.OK); 
 	         }
 	     
-	         throw new UserAlreadyExists("user already exists");
+	         throw new WorkflowAlreadyExists("workflow already exists");
 	    
 	    }
 

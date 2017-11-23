@@ -2,6 +2,8 @@ package com.sr;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -30,7 +32,12 @@ public class ControllerTest {
     PersistenceModel persistencemodel;
     @Before
     public void setUp() throws Exception {
-    	persistencemodel = new PersistenceModel(1, "1,2");
+    	ArrayList<Long>seq = new ArrayList<Long>();
+    	seq.add((long) 1);
+    	seq.add((long) 2);
+    	seq.add((long) 3);
+    	
+    	persistencemodel = new PersistenceModel(1, seq,"2");
     }
     private String createURLWithPort(String uri) {
         return "http://localhost:" + port + uri;
@@ -70,7 +77,7 @@ public class ControllerTest {
         assertNotNull(response);
         String actual = response.getBody();
         System.out.println(actual);
-        assertEquals("user updated",actual);
+        assertEquals("workflow updated",actual);
     }
     
    @Test

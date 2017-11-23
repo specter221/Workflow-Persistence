@@ -1,5 +1,7 @@
 package com.sr.domain;
 
+import java.util.ArrayList;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -11,7 +13,8 @@ public class PersistenceModel {
 	
 	@Id
 	private long id;
-	private String sequence;
+	private ArrayList<Long> sequence;
+	private String userid;
 	
 	/*---------------- getters and setters of fields ----------------- */
 	public long getId() {
@@ -20,25 +23,34 @@ public class PersistenceModel {
 	public void setId(long id) {
 		this.id = id;
 	}
-	public String getSequence() {
+	public ArrayList<Long> getSequence() {
 		return sequence;
 	}
-	public void setSequence(String sequence) {
+	public void setSequence(ArrayList<Long> sequence) {
 		this.sequence = sequence;
+	}
+	public String getUserid() {
+		return userid;
+	}
+	public void setUserid(String userid) {
+		this.userid = userid;
 	}
 	
 	/*------------------ constructors based on field ------------------- */
-	public PersistenceModel(long id, String sequence) {
+	public PersistenceModel(long id, ArrayList<Long> sequence, String userid) {
 		super();
 		this.id = id;
 		this.sequence = sequence;
+		this.userid = userid;
 	}
+	
 	
 	/*------------------- default constructor -------------------------- */ 
 	public PersistenceModel()
 	{
 		
 	}
+	
 	
 	
 	
